@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ASTRO-QUEST</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css')}}">
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+<div class="nebula-blob nb1"></div>
+<div class="nebula-blob nb2"></div>
+<div class="nebula-blob nb3"></div>
+
+<div class="wrapper">
+
+  <header>
+    <div class="header-top">
+      <h2 class="logo-mark">ASTRO QUEST</h1>
+      <div class="mission-id">
+        MISSION — <span id="mission-date"></span><br>
+        SAVE — <span>THE WORLD</span><br>
+        STATUS — <span>PRIMORDIAL</span>
+      </div>
+    </div>
+    <div class="header-line"></div>
+    <div class="header-sub">— Gestionnaire de missions spatiales</div>
+  </header>
+
+  <div class="stats">
+    <div class="stat-card total">
+      <div class="stat-icon">⬡</div>
+      <div class="stat-num" id="stat-total">{{ metadata['nextId'] }}</div>
+      <div class="stat-lbl">Missions</div>
+    </div>
+    <div class="stat-card pending">
+      <div class="stat-icon">◎</div>
+      <div class="stat-num">{{ metadata['pending'] }}</div>
+      <div class="stat-lbl">En orbite</div>
+    </div>
+    <div class="stat-card done">
+      <div class="stat-icon">✦</div>
+      <div class="stat-num">{{ metadata['ended'] }}</div>
+      <div class="stat-lbl">Complétées</div>
+    </div>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-header">
+      <span>Progression de mission</span>
+      <span id="prog-pct">{{ metadata['pct'] }}%</span>
+    </div>
+    <div class="prog-track">
+      <div class="prog-fill" id="prog-fill"></div>
+    </div>
+  </div>
+  <h3 class="new-quest">NEW QUEST</h1>
+  <div class="input-zone">
+    <form action="/add" method="POST">
+      <div style="display: block;"><input style="width: 100%; text-align:center;" class="task-input" type="text" name="id" value="{{ metadata['nextId']+1 }}" readonly/></div>
+      <input class="task-input" type="text" name="title" required placeholder="Titre de mission...."/>
+      <input class="task-input" type="text" placeholder="Objectif de mission…" name="description" maxlength="120" autocomplete="off"/>
+      <button style="display: block; margin: auto;" class="add-btn" type="submit" id="add-bt">LANCER</button>
+    </form>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active">TOUT</button>
+    <button class="filter-btn">EN COURS</button>
+    <button class="filter-btn">COMPLÉTÉES</button>
+  </div>
+
+  <ul id="todo-list">
+    {% for task in taskList %}
+      <li class="todo-item" style="animation-delay: 0s;">
+        <label class="check-wrap">
+          <input type="checkbox" {{ 'checked' if task.state == 1 else '' }} onchange="toggle({{ task.id }})" name="" id="{{ task.id }}">
+          <span class="checkmark"></span>
+        </label>
+          <span class="task-text">{{ task.description }}</span>
+          <button class="del-btn" title="Supprimer"><a href="deleteid={{ task.id }}" style="color:red;text-decoration:none;">x</a></button>
+      </li>
+    {% endfor %}
+  </ul>
+  {% if not(taskList) %}
+    <div class="empty-state">
+          <div class="empty-orbit"></div>
+            <p> Aucune mission pour l'instant mais restez en alerte</p>
+        </div>`
+  {% endif %}
+  <footer>
+    <button class="clear-btn">Purger terminées</button>
+    <div class="sys-status">
+      <div class="status-dot"></div>
+      <span>SYSTÈME ACTIF</span>
+    </div>
+  </footer>
+
+</div>
+<script src="{{ url_for('static', filename='/js/script.js')}}"></script>
+<script>
+    function toggle(id){
+        chkbox = document.getElementById(id)
+        if (!chkbox.checked){
+            console.log("UNchecked "+ id)
+            window.location.href = '/pendingid='+id;
+        }else{
+            console.log("Checked "+ id)
+            window.location.href = '/endedid='+id;
+        }
+    }
+    </script>
+</body>
+</html>
