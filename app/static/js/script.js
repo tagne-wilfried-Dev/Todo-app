@@ -43,4 +43,13 @@
   console.log(pct)
   document.getElementById('prog-fill').style.width = pct;
   console.log(document.getElementById('prog-fill').style.width)
-
+ 
+ /* modal de details des missions */
+ function openModal(id){
+    document.getElementById("modal"+id).classList.add('modalvisible')
+    
+ }
+ function closeModal(id){
+    document.getElementById("modal"+id).classList.remove('modalvisible')
+    
+ }

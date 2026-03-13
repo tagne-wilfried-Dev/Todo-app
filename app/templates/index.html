@@ -80,8 +80,55 @@
           <span class="checkmark"></span>
         </label>
           <span class="task-text">{{ task.description }}</span>
+          <button class="detail-btn" onclick="openModal({{ task.id }})" title="Détails">◈ INFO</button>
           <button class="del-btn" title="Supprimer"><a href="deleteid={{ task.id }}" style="color:red;text-decoration:none;">x</a></button>
       </li>
+      <!-- MODAL DETAILS -->
+<div class="modal-overlay" id="modal{{ task.id }}">
+  <div class="modal" id="modal-box">
+    <div class="modal-topbar" id="modal-topbar"></div>
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <div class="modal-eyebrow">◈ Dossier de mission</div>
+        <div class="modal-title" id="modal-title"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal({{ task.id }})" id="modal-close-x">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-desc" id="modal-desc"></div>
+      <div class="modal-grid">
+        <div class="modal-field full">
+          <div class="field-label">⬡ Identifiant de mission</div>
+          <div class="field-value id-val" id="modal-id">{{ task.id }}</div>
+        </div>
+        <div class="modal-field full">
+          <div class="field-label">◎ Statut opérationnel</div>
+          <div class="field-value" id="modal-status">{{ task.state }}</div>
+        </div>
+        <div class="modal-field">
+          <div class="field-label">▶ Date d'émission</div>
+          <div class="field-value" id="modal-date-start"></div>
+        </div>
+        <div class="modal-field">
+          <div class="field-label">◷ Heure d'émission</div>
+          <div class="field-value" id="modal-time-start"></div>
+        </div>
+        <div class="modal-field">
+          <div class="field-label">◼ Date de fin</div>
+          <div class="field-value" id="modal-date-end"></div>
+        </div>
+        <div class="modal-field">
+          <div class="field-label">◷ Heure de fin</div>
+          <div class="field-value" id="modal-time-end"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-close-btn" onclick="closeModal({{ task.id }})" id="modal-close-btn">Fermer le dossier</button>
+    </div>
+  </div>
+</div>
+
     {% endfor %}
   </ul>
   {% if not(taskList) %}
@@ -97,8 +144,9 @@
       <span>SYSTÈME ACTIF</span>
     </div>
   </footer>
-
+  
 </div>
+
 <script src="{{ url_for('static', filename='/js/script.js')}}"></script>
 <script>
     function toggle(id){
