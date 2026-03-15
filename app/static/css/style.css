@@ -510,7 +510,7 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .modal-title-wrap {}
+    /* .modal-title-wrap {} */
     .modal-eyebrow {
       font-family: 'Orbitron', monospace;
       font-size: .5rem;
