@@ -22,8 +22,8 @@ conn.execute(query)
 #         break
 
 # conn.commit()
-
-tests = conn.execute("SELECT MAX(id) FROM test").fetchone()
+cur = conn.cursor()
+tests = cur.execute("SELECT * FROM test")
 for test in tests:
-    print(int(test) +1 )
+    print(tests)
     
