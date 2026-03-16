@@ -34,3 +34,6 @@ class TaskService:
     
     def taskPending(self, id):
         return self.taskDAO.taskPending(id)
+    
+    def deleteEnded(self):
+        return self.taskDAO.deleteEndedTasks()

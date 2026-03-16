@@ -59,3 +59,31 @@ function closeModal(id){
   document.getElementById("modal"+id).style.pointerEvents = 'none'  
   document.getElementById("modal-body"+id).style.zIndex = 12  
 }
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+function printAllTasks(){
+  document.querySelectorAll('.todo-item').forEach(element => {
+    element.style.display = 'grid';
+  });
+}
+function printEndedTasks(){
+  document.querySelectorAll('.not-ended').forEach(element => {
+    element.style.display = 'none';
+  });
+  document.querySelectorAll('.ended').forEach(element => {
+    element.style.display = 'grid';
+  });
+}
+function printPendingTasks(){
+  document.querySelectorAll('.ended').forEach(element => {
+    element.style.display = 'none';
+  });
+  document.querySelectorAll('.not-ended').forEach(element => {
+    element.style.display = 'grid';
+  });
+}

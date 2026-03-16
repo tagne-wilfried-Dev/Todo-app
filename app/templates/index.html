@@ -67,14 +67,14 @@
   </div>
 
   <div class="filters">
-    <button class="filter-btn active">TOUT</button>
-    <button class="filter-btn">EN COURS</button>
-    <button class="filter-btn">COMPLÉTÉES</button>
+    <button class="filter-btn active" id="all" onclick="printAllTasks()">TOUT</button>
+    <button class="filter-btn" id="pending-tasks" onclick="printPendingTasks()">EN COURS</button>
+    <button class="filter-btn" id="ended-task" onclick="printEndedTasks()">COMPLÉTÉES</button>
   </div>
 
   <ul id="todo-list">
     {% for task in taskList %}
-      <li class="todo-item" style="animation-delay: 0s;">
+      <li class="todo-item {{ 'ended' if task.state == 1 else 'not-ended' }}" style="animation-delay: 0s;">
         <label class="check-wrap">
           <input type="checkbox" {{ 'checked' if task.state == 1 else '' }} onchange="toggle({{ task.id }})" name="" id="{{ task.id }}">
           <span class="checkmark"></span>
@@ -138,7 +138,7 @@
         </div>`
   {% endif %}
   <footer>
-    <button class="clear-btn">Purger terminées</button>
+    <button class="clear-btn" title="Effacer les missions terminees"><a href="/deleteEndedTasks">Purger terminées</a></button>
     <div class="sys-status">
       <div class="status-dot"></div>
       <span>SYSTÈME ACTIF</span>

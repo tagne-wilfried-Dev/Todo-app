@@ -124,6 +124,15 @@ class TaskDAO(TaskDAOInterface):
         conn.close()
         return deleted
     
+    def deleteEndedTasks(self):
+        """Supprime toutes les taches terminees """
+        conn = self._getDbConnection()
+        query = "DELETE FROM tasks WHERE state=1 "
+        conn.execute(query)
+        conn.commit()
+        conn.close()
+        return True
+        
     def updateTaskId(self, deletedTaskId):
         """ update tous les id des taches suivant la tache supprimee
             en les decrementant"""

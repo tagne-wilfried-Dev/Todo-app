@@ -41,7 +41,10 @@ class TaskController:
     def taskPending(id):
         TaskController.taskServ.taskPending(id)
         return redirect(url_for('home'))
-        
+    @app.route('/deleteEndedTasks', methods=['GET'])
+    def deleteEndedTasks():
+        TaskController.taskServ.deleteEnded()
+        return redirect(url_for('home'))    
             
             
         
